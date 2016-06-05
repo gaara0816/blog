@@ -33,9 +33,9 @@ type User struct {
 type Category struct {
 	Id                int64
 	Title             string
-	Created           time.Time `orm:"index"`
+	Created           time.Time `orm:"auto_now_add;type(date)"`
 	Views             int64     `orm:"index"`
-	ArticleTime       time.Time `orm:"index"`
+	ArticleTime       time.Time `orm:"auto_now_add;type(date)"`
 	ArticleCount      int64
 	ArticleLastUserId int64
 }
@@ -70,14 +70,14 @@ func RegisterDB() {
 
 func AddCategory(name string) error {
 	o := orm.NewOrm()
-	cate := &Category{Title: name}
-	qs := o.QueryTable("Category")
-	err := qs.Filter("Title", name).One(cate)
+	cate := Category{Title: name}
+	qs := o.QueryTable("category")
+	err := qs.Filter("title", name).One(&cate)
 
 	if err == nil {
 		return err
 	}
-	_, err = o.Insert(cate)
+	_, err = o.Insert(&cate)
 	if err != nil {
 		return err
 	}
@@ -85,11 +85,11 @@ func AddCategory(name string) error {
 	return nil
 }
 
-func obtainAllCategories() ([]*Category error){
+func ObtainAllCategories() ([]*Category, error) {
 	o := orm.NewOrm()
-	categories := make([]*Category,0)
-	qs := o.QueryTable("Category")
-	
-	_,err := qs.All(categories)
-	return categories,err
+	categories := make([]*Category, 0)
+	qs := o.QueryTable("category")
+
+	_, err := qs.All(&categories)
+	return categories, err
 }

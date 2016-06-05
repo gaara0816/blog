@@ -22,31 +22,35 @@
                   alert("请输入分类名称")
                   return false;
                 }
-
                 return true
               }
             </script>
 
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>名称</th>
-                  <th>文章数</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{range .Categories}}
-                  <th>{{.Id}}</th>
-                  <th>{{.Title}}</th>
-                  <th>{{.ArticleCount}}</th>
-                  <th>
-                    <a href="/category/op=del%id={{.Id}}">删除</a>
-                  </th>
-                {{end}}
-              </tbody>
-            </table>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>名称</th>
+                    <th>文章数</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                    {{range .Categories}}
+                    <tr>
+                    <td>{{.Id}}</td>
+                    <td>{{.Title}}</td>
+                    <td>{{.ArticleCount}}</td>
+                    <td>
+                      <a href="/category/op=del%id={{.Id}}">删除</a>
+                    </td>
+                    </tr>
+                  {{end}}
+                  
+                  
+                </tbody>
+              </table>
           </div>
             
 

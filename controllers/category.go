@@ -28,9 +28,14 @@ func (c *CategoryController) Get() {
 		if len(id) == 0 {
 			break
 		}
-	default:
-		c.Data["IsCategory"] = true
-		c.TplName = "category.html"
+	}
+	c.Data["IsCategory"] = true
+	c.TplName = "category.html"
+	var err error
+	c.Data["Categories"], err = models.ObtainAllCategories()
+
+	if err != nil {
+		beego.Error(err)
 	}
 
 }
