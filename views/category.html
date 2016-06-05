@@ -1,0 +1,58 @@
+{{template "header"}}
+    <title>Demon's Blog</title>
+  </head>
+
+  <body style="padding-top: 70px">
+      {{template "navbar" .}}
+          <div class="container">
+            <h1>分类管理</h1>
+            <form method="Get" action="/category">
+              <div class="form-group">
+                <label>分类名称</label>
+                <input id="name" class="form-control" placeholder="enter category name" name="name"></input>
+              </div>
+              <input type="hidden" name="op" value="add"></input>
+              <button type="submit" class="btn btn-default" onclick="return checkInput();">提交</button>
+            </form>
+
+            <script type="text/javascript">
+              function checkInput() {
+                var name = document.getElementById('name')
+                if (name.value.length == 0) {
+                  alert("请输入分类名称")
+                  return false;
+                }
+
+                return true
+              }
+            </script>
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>名称</th>
+                  <th>文章数</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{range .Categories}}
+                  <th>{{.Id}}</th>
+                  <th>{{.Title}}</th>
+                  <th>{{.ArticleCount}}</th>
+                  <th>
+                    <a href="/category/op=del%id={{.Id}}">删除</a>
+                  </th>
+                {{end}}
+              </tbody>
+            </table>
+          </div>
+            
+
+
+      <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="http://cdn.saticfile.org/jquery/2.0.3/jquery.min.js"></script>
+  </body>
+
+</html>
