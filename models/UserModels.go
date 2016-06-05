@@ -6,6 +6,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"os"
 	"path"
+	"strconv"
 	"time"
 )
 
@@ -85,6 +86,17 @@ func AddCategory(name string) error {
 	return nil
 }
 
+func DeleteCategory(id string) error {
+	cid, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return err
+	}
+	o := orm.NewOrm()
+	category := Category{Id: cid}
+	_, err = o.Delete(&category)
+	return err
+}
+
 func ObtainAllCategories() ([]*Category, error) {
 	o := orm.NewOrm()
 	categories := make([]*Category, 0)
@@ -92,4 +104,26 @@ func ObtainAllCategories() ([]*Category, error) {
 
 	_, err := qs.All(&categories)
 	return categories, err
+}
+
+func AddArticle(title string, content string) error {
+	o := orm.NewOrm()
+	cate := Article{
+		Title:     title,
+		Content:   content,
+		Created:   time.Now(),
+		Updated:   time.Now(),
+		ReplyTime: time.Now(),
+	}
+	_, err := o.Insert(&cate)
+	return err
+}
+
+func ObtainAllArticles() ([]*Article, error) {
+	o := orm.NewOrm()
+	articles := make([]*Article, 0)
+	qs := o.QueryTable("article")
+
+	_, err := qs.All(&articles)
+	return articles, err
 }

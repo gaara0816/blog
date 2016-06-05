@@ -1,0 +1,43 @@
+{{template "header"}}
+    <title>Demon's Blog</title>
+  </head>
+
+  <body style="padding-top: 70px">
+      {{template "navbar" .}}
+          <div class="container">
+            <h1>文章浏览</h1>
+            <a href="/article/add" class="btn btn-default">添加文章</a>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>名称</th>
+                    <th>最后更新</th>
+                    <th>浏览</th>
+                    <th>回复数</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                  {{range .Articles}}
+                    <tr>
+                      <td>{{.Id}}</td>
+                      <td>{{.Title}}</td>
+                      <td>{{.Updated}}</td>
+                      <td>{{.Views}}</td>
+                      <td>{{.ReplyCount}}</td>
+                    </tr>
+                  {{end}}
+                  
+                  
+                </tbody>
+              </table>
+          </div>
+            
+
+
+      <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="http://cdn.saticfile.org/jquery/2.0.3/jquery.min.js"></script>
+  </body>
+
+</html>

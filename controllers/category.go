@@ -28,9 +28,17 @@ func (c *CategoryController) Get() {
 		if len(id) == 0 {
 			break
 		}
+		err := models.DeleteCategory(id)
+		if err != nil {
+			beego.Error(err)
+		}
+		c.Redirect("/category", 301)
+		return
 	}
 	c.Data["IsCategory"] = true
 	c.TplName = "category.html"
+	isLogin := checkAccount(c.Ctx)
+	c.Data["IsLogin"] = isLogin
 	var err error
 	c.Data["Categories"], err = models.ObtainAllCategories()
 
